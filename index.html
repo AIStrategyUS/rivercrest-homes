@@ -312,12 +312,8 @@
   <!-- Residential neighborhood scene -->
   <div class="hero-scene">
     <svg viewBox="0 0 1440 280" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-
-      <!-- Distant rolling hills -->
       <path d="M0 200 Q180 155 380 175 Q580 195 780 165 Q980 135 1180 168 Q1320 188 1440 175 L1440 280 L0 280 Z" fill="rgba(20,55,28,0.65)"/>
       <path d="M0 230 Q200 210 420 220 Q640 230 860 215 Q1080 200 1280 218 Q1380 228 1440 222 L1440 280 L0 280 Z" fill="rgba(15,42,20,0.80)"/>
-
-      <!-- ═══ LEFT — craftsman home ═══ -->
       <rect x="30" y="152" width="130" height="128" fill="#1E3A52" rx="2"/>
       <polygon points="22,154 95,98 168,154" fill="#162C40"/>
       <polygon points="95,98 168,154 95,154" fill="rgba(0,0,0,0.14)"/>
@@ -347,9 +343,6 @@
       <rect x="81" y="120" width="28" height="22" fill="rgba(255,220,100,0.10)" rx="1"/>
       <rect x="72" y="278" width="46" height="4" fill="#0A1A28" rx="1"/>
       <rect x="68" y="274" width="54" height="4" fill="#0C1E30" rx="1"/>
-      <rect x="88" y="278" width="14" height="2" fill="rgba(126,200,160,0.12)" rx="1"/>
-      <rect x="38" y="168" width="32" height="28" fill="rgba(255,220,80,0.05)" rx="1"/>
-      <circle cx="95" cy="186" r="3" fill="rgba(255,220,80,0.25)"/>
       <ellipse cx="32" cy="245" rx="18" ry="14" fill="rgba(20,70,30,0.75)"/>
       <ellipse cx="32" cy="238" rx="12" ry="10" fill="rgba(22,80,34,0.85)"/>
       <ellipse cx="158" cy="243" rx="16" ry="12" fill="rgba(20,70,30,0.75)"/>
@@ -357,8 +350,6 @@
       <rect x="6" y="215" width="7" height="65" fill="rgba(12,28,18,0.80)" rx="2"/>
       <ellipse cx="9" cy="202" rx="22" ry="28" fill="rgba(18,60,26,0.72)"/>
       <ellipse cx="9" cy="190" rx="15" ry="20" fill="rgba(20,68,30,0.80)"/>
-
-      <!-- ═══ CENTER-LEFT — two-story colonial ═══ -->
       <rect x="310" y="120" width="160" height="160" fill="#1A3450" rx="2"/>
       <polygon points="300,122 390,62 480,122" fill="#152A40"/>
       <polygon points="390,62 480,122 390,122" fill="rgba(0,0,0,0.12)"/>
@@ -404,8 +395,6 @@
       <rect x="288" y="195" width="9" height="85" fill="rgba(12,28,18,0.75)" rx="2"/>
       <ellipse cx="292" cy="180" rx="28" ry="36" fill="rgba(16,58,24,0.68)"/>
       <ellipse cx="292" cy="164" rx="18" ry="24" fill="rgba(18,64,28,0.78)"/>
-
-      <!-- ═══ CENTER — main focal home (larger, well-lit) ═══ -->
       <rect x="580" y="108" width="280" height="172" fill="#1C3A54" rx="2"/>
       <polygon points="568,110 720,42 872,110" fill="#152E44"/>
       <polygon points="720,42 872,110 720,110" fill="rgba(0,0,0,0.12)"/>
@@ -461,8 +450,6 @@
       <rect x="876" y="192" width="10" height="88" fill="rgba(12,28,18,0.72)" rx="2"/>
       <ellipse cx="881" cy="176" rx="28" ry="36" fill="rgba(16,56,24,0.65)"/>
       <ellipse cx="881" cy="160" rx="18" ry="24" fill="rgba(18,64,28,0.72)"/>
-
-      <!-- ═══ RIGHT — bungalow ═══ -->
       <rect x="1160" y="158" width="140" height="122" fill="#1A3450" rx="2"/>
       <polygon points="1148,160 1230,100 1312,160" fill="#152840"/>
       <polygon points="1230,100 1312,160 1230,160" fill="rgba(0,0,0,0.12)"/>
@@ -493,8 +480,6 @@
       <rect x="1320" y="210" width="8" height="70" fill="rgba(12,28,18,0.70)" rx="2"/>
       <ellipse cx="1324" cy="196" rx="24" ry="30" fill="rgba(16,58,24,0.65)"/>
       <ellipse cx="1324" cy="182" rx="16" ry="20" fill="rgba(18,64,28,0.72)"/>
-
-      <!-- Ground base -->
       <rect x="0" y="275" width="1440" height="5" fill="rgba(8,22,12,0.90)"/>
     </svg>
   </div>
@@ -537,7 +522,6 @@
             <input type="tel" id="f-phone" name="phone" placeholder="(615) 000-0000" required />
             <div class="field-error" id="err-phone"></div>
           </div>
-          <!-- CHANGE 1: Added optional email field -->
           <div class="form-group" id="grp-email">
             <label for="f-email">Email Address <span style="font-weight:400;color:var(--slate-lt);text-transform:none;letter-spacing:0;">(optional)</span></label>
             <input type="email" id="f-email" name="email" placeholder="you@example.com" />
@@ -561,7 +545,8 @@
               <option>Other / Just curious</option>
             </select>
           </div>
-          <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" data-theme="light" id="turnstileWidget"></div>
+          <!-- ✅ UPDATED: Real Turnstile site key -->
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADPq_rIY9oa9jRcC" data-theme="light" id="turnstileWidget"></div>
           <div class="field-error" id="err-turnstile" style="text-align:center;"></div>
           <button type="submit" class="btn-submit" id="submitBtn">Request My Cash Offer &rarr;</button>
         </form>
@@ -613,7 +598,7 @@
   </div>
 </div>
 
-<!-- COMPARE — moved up, high on page -->
+<!-- COMPARE -->
 <section class="compare-section accent-top">
   <div class="compare-inner">
     <div class="section-center reveal">
@@ -627,46 +612,14 @@
         <div>Traditional Agent</div>
         <div class="col-us">Cash Offer</div>
       </div>
-      <div class="compare-row">
-        <div class="row-label">Commission &amp; Fees</div>
-        <div class="col-agent">5–6%</div>
-        <div class="col-us-val">NONE</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Closing Costs</div>
-        <div class="col-agent">2–3%</div>
-        <div class="col-us-val">NONE</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Repairs Before Selling</div>
-        <div class="col-agent">Usually required</div>
-        <div class="col-us-val">NONE</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Appraisal &amp; Inspection</div>
-        <div class="col-agent">Required</div>
-        <div class="col-us-val">NOT NEEDED</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Days to Close</div>
-        <div class="col-agent">30–90 days</div>
-        <div class="col-us-val">AS FEW AS 10</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Closing Date</div>
-        <div class="col-agent">Buyer's schedule</div>
-        <div class="col-us-val">YOUR CHOICE</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Showings &amp; Open Houses</div>
-        <div class="col-agent">Yes — multiple</div>
-        <div class="col-us-val">NONE</div>
-      </div>
-      <div class="compare-row">
-        <div class="row-label">Deal Falls Through Risk</div>
-        <div class="col-agent">Common</div>
-        <div class="col-us-val">VERY RARE</div>
-      </div>
+      <div class="compare-row"><div class="row-label">Commission &amp; Fees</div><div class="col-agent">5–6%</div><div class="col-us-val">NONE</div></div>
+      <div class="compare-row"><div class="row-label">Closing Costs</div><div class="col-agent">2–3%</div><div class="col-us-val">NONE</div></div>
+      <div class="compare-row"><div class="row-label">Repairs Before Selling</div><div class="col-agent">Usually required</div><div class="col-us-val">NONE</div></div>
+      <div class="compare-row"><div class="row-label">Appraisal &amp; Inspection</div><div class="col-agent">Required</div><div class="col-us-val">NOT NEEDED</div></div>
+      <div class="compare-row"><div class="row-label">Days to Close</div><div class="col-agent">30–90 days</div><div class="col-us-val">AS FEW AS 10</div></div>
+      <div class="compare-row"><div class="row-label">Closing Date</div><div class="col-agent">Buyer's schedule</div><div class="col-us-val">YOUR CHOICE</div></div>
+      <div class="compare-row"><div class="row-label">Showings &amp; Open Houses</div><div class="col-agent">Yes — multiple</div><div class="col-us-val">NONE</div></div>
+      <div class="compare-row"><div class="row-label">Deal Falls Through Risk</div><div class="col-agent">Common</div><div class="col-us-val">VERY RARE</div></div>
     </div>
   </div>
 </section>
@@ -697,22 +650,10 @@
       <p class="section-body">We believe you deserve to know every step before committing. No mysteries, no pressure.</p>
     </div>
     <div class="process-steps">
-      <div class="process-step reveal">
-        <div class="step-num">1</div>
-        <div class="step-body"><h3>Submit Your Property Info</h3><p>Fill out the short form — just your name, phone, and address. No commitment, no strings attached.</p><span class="step-tag">Takes about 2 minutes</span></div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-num">2</div>
-        <div class="step-body"><h3>We Research &amp; Reach Out Within 48 Hours</h3><p>After reviewing your property details, a real person from our team will call you to have a genuine conversation about your situation — not a bot or call center.</p><span class="step-tag">&#10003; Real person, every time</span></div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-num">3</div>
-        <div class="step-body"><h3>We Put Together a Fair Offer</h3><p>We'll work up an honest cash offer and walk you through exactly how we got to that number — no pressure to accept.</p><span class="step-tag">Transparent &amp; explained</span></div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-num">4</div>
-        <div class="step-body"><h3>You Decide — On Your Terms</h3><p>If it makes sense, great. If not, no hard feelings. Accept and we handle all the paperwork, closing on the date that works best for you.</p><span class="step-tag">Your closing date, your choice</span></div>
-      </div>
+      <div class="process-step reveal"><div class="step-num">1</div><div class="step-body"><h3>Submit Your Property Info</h3><p>Fill out the short form — just your name, phone, and address. No commitment, no strings attached.</p><span class="step-tag">Takes about 2 minutes</span></div></div>
+      <div class="process-step reveal"><div class="step-num">2</div><div class="step-body"><h3>We Research &amp; Reach Out Within 48 Hours</h3><p>After reviewing your property details, a real person from our team will call you to have a genuine conversation about your situation — not a bot or call center.</p><span class="step-tag">&#10003; Real person, every time</span></div></div>
+      <div class="process-step reveal"><div class="step-num">3</div><div class="step-body"><h3>We Put Together a Fair Offer</h3><p>We'll work up an honest cash offer and walk you through exactly how we got to that number — no pressure to accept.</p><span class="step-tag">Transparent &amp; explained</span></div></div>
+      <div class="process-step reveal"><div class="step-num">4</div><div class="step-body"><h3>You Decide — On Your Terms</h3><p>If it makes sense, great. If not, no hard feelings. Accept and we handle all the paperwork, closing on the date that works best for you.</p><span class="step-tag">Your closing date, your choice</span></div></div>
     </div>
   </div>
 </section>
@@ -819,7 +760,6 @@
       document.getElementById('err-phone').textContent = 'Please enter a valid 10-digit phone number.';
       phone.focus(); ok = false;
     } else if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-      /* CHANGE 2: Only validate email format if something was entered (optional field) */
       document.getElementById('grp-email').classList.add('input-err');
       document.getElementById('err-email').textContent = 'Please enter a valid email address.';
       email.focus(); ok = false;
@@ -831,7 +771,6 @@
     return ok;
   }
 
-  /* CHANGE 3: Updated SHEET_URL to Cloudflare Worker */
   const SHEET_URL = 'https://rivercrest-property-lead-form.aistrategyus.workers.dev';
 
   document.getElementById('mainForm').addEventListener('submit', async function(e) {
@@ -845,7 +784,6 @@
       submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }),
       full_name: document.getElementById('f-name').value.trim(),
       phone: document.getElementById('f-phone').value.trim(),
-      /* CHANGE 4: Added email to payload */
       email: document.getElementById('f-email').value.trim(),
       property_address: document.getElementById('f-addr').value.trim(),
       my_situation: document.getElementById('f-sit').value,
