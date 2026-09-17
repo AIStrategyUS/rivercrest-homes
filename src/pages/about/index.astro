@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PullQuote from '../../components/PullQuote.astro';
+---
+
+<Layout
+  title="About TN Home Cash Offer | Middle Tennessee Cash Home Buyers"
+  description="TN Home Cash Offer is a locally operated cash home buying company serving Middle Tennessee. Here's how we work and why."
+  canonicalPath="/about/"
+>
+  <section class="about-hero">
+    <div class="wrap-narrow">
+      <span class="eyebrow reveal">About Us</span>
+      <h1 class="reveal">A Local Company, Built Around One Idea.</h1>
+      <p class="lede reveal" style="margin-bottom:0;">
+        TN Home Cash Offer buys houses directly from homeowners across Middle Tennessee. We're not a
+        national franchise or an algorithm generating instant offers. Every property gets a real
+        visit and a real person on the phone.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <div class="reveal">
+        <h2 style="margin-bottom:12px; font-size:22px;">How We Actually Operate</h2>
+        <p class="lede">
+          Every closing runs through a licensed Tennessee title company, the same way a traditional sale
+          would. The difference is there's no bank on the other side of the transaction whose financing
+          can fall through.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow">
+      <PullQuote quote="Every homeowner who calls us is dealing with something different. We try to treat the call the way we'd want a call about our own house treated." />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow reveal">
+      <h2 style="margin-bottom:12px; font-size:22px;">Why We Don't Have Client Photos or Testimonials Up Yet</h2>
+      <p class="lede">
+        We'd rather launch this site without stock photography or borrowed reviews than fill the gap
+        with something that isn't real. As we complete more projects, we'll add actual photos and
+        reviews from actual homeowners we've worked with.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-sunk">
+    <div class="wrap-narrow center">
+      <a href="/how-it-works/" class="btn btn-ghost reveal">See how the process works &rarr;</a>
+      <a href="/contact/#get-offer" class="btn btn-primary reveal" style="margin-left:12px;">Get My Cash Offer</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .about-hero {
+    padding: 156px 0 64px;
+    background:
+      radial-gradient(ellipse 55% 60% at 90% 0%, rgba(201,154,61,0.14) 0%, transparent 60%),
+      var(--paper-sunk);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-hero h1 { margin-bottom: 18px; }
+  @media (max-width: 640px) {
+    .about-hero { padding: 124px 0 48px; }
+  }
+</style>

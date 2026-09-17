@@ -1,0 +1,27 @@
+---
+// Honest, clearly-labeled empty state for the (currently empty) projects
+// collection — never a stock photo standing in for a real property.
+interface Props {
+  aspect?: string;
+  label?: string;
+}
+const { aspect = '4 / 3', label = 'Photo coming soon' } = Astro.props;
+---
+<div class="placeholder-photo" style={`aspect-ratio:${aspect}`}>
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 22L24 8l18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 19v19a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M19 40V28h10v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>{label}</span>
+</div>
+
+<style>
+  .placeholder-photo {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    background: var(--paper-sunk); border: 1.5px dashed var(--border); border-radius: 12px;
+    color: var(--slate-lt); width: 100%;
+  }
+  .placeholder-photo svg { width: 34px; height: 34px; }
+  .placeholder-photo span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+</style>

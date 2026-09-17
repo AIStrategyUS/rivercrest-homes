@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+---
+
+<Layout
+  title="Contact TN Home Cash Offer | Get Your Cash Offer"
+  description="Reach TN Home Cash Offer by phone or submit your property to get a cash offer. We respond within 48 hours."
+  canonicalPath="/contact/"
+  includeTurnstile={true}
+  navCtaHref="#get-offer"
+>
+  <section class="section" style="padding-top:120px;">
+    <div class="wrap contact-grid">
+      <div>
+        <h1 class="reveal" style="margin-bottom:14px;">Tell Us About Your Property.</h1>
+        <p class="lede reveal" style="margin-bottom:28px;">
+          Takes about two minutes. No obligation, and we'll never sell your information.
+        </p>
+
+        <div class="reveal" style="margin-bottom:24px;">
+          <h2 style="font-size:18px; margin-bottom:8px;">Prefer to Talk It Through First?</h2>
+          <p class="lede" style="margin-bottom:6px;">
+            Call or text <a href="tel:6293430888" class="phone-link">629-343-0888</a>. It's a real,
+            monitored line. We'll review what you send through the form and reach out within 48 hours
+            either way.
+          </p>
+        </div>
+
+        <div class="reveal" style="margin-bottom:24px;">
+          <h2 style="font-size:18px; margin-bottom:8px;">Is This a Real Business?</h2>
+          <p class="lede">
+            Rivercrest Homes LLC is a Tennessee company. We don't keep a public storefront. We meet
+            homeowners at the property itself, and every closing happens at a licensed local title
+            company, the same as it would with a traditional sale.
+          </p>
+        </div>
+
+        <div class="reveal mini-faq">
+          <h2 style="font-size:18px; margin-bottom:10px;">Quick Question</h2>
+          <FAQAccordion items={[{ q: 'How fast will you respond?', a: "Usually within 48 hours. Read the full FAQ for everything else." }]} idPrefix="contact" />
+          <a href="/faq/" class="btn btn-ghost" style="margin-top:14px;">Read the full FAQ &rarr;</a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-grid { display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: start; }
+  .phone-link { color: var(--forest-dk); font-weight: 600; text-decoration: none; }
+  .mini-faq { margin-top: 8px; }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

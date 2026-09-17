@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import FAQAccordion from '../../components/FAQAccordion.astro';
+import { faqCategories, faqFlat } from '../../data/faq.js';
+
+// Generated directly from the same data that renders the visible accordion
+// below, so the structured data can never drift out of sync with what a
+// visitor actually sees (a Google requirement for FAQPage rich results).
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqFlat.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a,
+    },
+  })),
+};
+---
+
+<Layout
+  title="Frequently Asked Questions | TN Home Cash Offer"
+  description="Answers to common questions about selling a distressed or hard-to-sell house to TN Home Cash Offer: our offer process, fees, timing, and specific situations."
+  canonicalPath="/faq/"
+  structuredData={[faqSchema]}
+>
+  <PageHero
+    eyebrow="Quick Answers"
+    title="Questions We Get on Almost Every Call."
+    subtitle="Organized by topic. Jump to what you actually need."
+  />
+
+  <section class="section-tight">
+    <div class="wrap-narrow">
+      {faqCategories.map((cat) => (
+        <div class="faq-cat reveal">
+          <h2>{cat.category}</h2>
+          <FAQAccordion items={cat.items} idPrefix={cat.category.toLowerCase().replace(/[^a-z]+/g, '-')} />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow center">
+      <p class="lede center reveal" style="margin:0 auto 20px;">Still have a question?</p>
+      <a href="/contact/#get-offer" class="btn btn-primary reveal">Get My Cash Offer</a>
+      <a href="tel:6293430888" class="btn btn-ghost reveal" style="margin-left:12px;">Or call 629-343-0888</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .faq-cat { margin-bottom: 36px; }
+  .faq-cat:last-child { margin-bottom: 0; }
+  .faq-cat h2 { font-size: 18px; margin-bottom: 14px; }
+</style>

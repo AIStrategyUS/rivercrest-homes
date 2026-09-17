@@ -1,0 +1,45 @@
+---
+interface Step {
+  title: string;
+  body: string;
+  tag?: string;
+}
+interface Props {
+  steps: Step[];
+}
+const { steps } = Astro.props;
+---
+<div class="timeline">
+  {steps.map((s, i) => (
+    <div class="tl-step reveal">
+      <div class="tl-num mono">{i + 1}</div>
+      <div class="tl-body">
+        <h3>{s.title}</h3>
+        <p>{s.body}</p>
+        {s.tag && <span class="tl-tag">{s.tag}</span>}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .timeline { display: flex; flex-direction: column; }
+  .tl-step { display: flex; gap: 26px; align-items: flex-start; padding: 30px 0; border-bottom: 1px solid rgba(255,255,255,0.08); position: relative; }
+  .tl-step:last-child { border-bottom: none; }
+  .tl-step:not(:last-child)::after {
+    content: ''; position: absolute; left: 23px; top: 76px; bottom: -4px; width: 2px;
+    background: linear-gradient(to bottom, rgba(126,200,160,0.45), transparent);
+  }
+  .tl-num {
+    flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
+    border: 2px solid rgba(126,200,160,0.4); background: rgba(27,107,69,0.14);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 600; color: #7EC8A0;
+  }
+  .tl-body h3 { font-size: 18px; color: #fff; margin-bottom: 8px; }
+  .tl-body p { font-size: 14.5px; color: rgba(255,255,255,0.56); line-height: 1.75; }
+  .tl-tag {
+    display: inline-block; margin-top: 12px; background: rgba(27,107,69,0.18); border: 1px solid rgba(126,200,160,0.24);
+    color: #7EC8A0; font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; padding: 4px 12px; border-radius: 100px;
+  }
+</style>

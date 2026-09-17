@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import StatBand from '../components/StatBand.astro';
+import PullQuote from '../components/PullQuote.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import SituationCard from '../components/SituationCard.astro';
+import { situations } from '../data/situations.js';
+
+const stats = [
+  { value: '10-30', label: 'Days to close, your choice of date' },
+  { value: '0%', label: 'Commission or fees' },
+  { value: '6', label: 'Counties served in Middle TN' },
+  { value: '100%', label: 'As-is, no repairs required' },
+];
+
+const compareRows = [
+  { label: 'Commission & Fees', agent: '5-6%', us: 'None' },
+  { label: 'Closing Costs', agent: '2-3%', us: 'None' },
+  { label: 'Repairs Before Selling', agent: 'Usually required', us: 'None' },
+  { label: 'Days to Close', agent: '30-90 days', us: 'As few as 10' },
+  { label: 'Closing Date', agent: "Buyer's schedule", us: 'Your choice' },
+];
+
+const teaserSituations = situations.slice(0, 8);
+---
+
+<Layout
+  title="Sell Your House Fast in Middle Tennessee | TN Home Cash Offer"
+  description="Need to sell a distressed, inherited, or hard-to-sell house fast in Middle Tennessee? TN Home Cash Offer buys houses directly from homeowners in Nashville and Clarksville metro, any condition, any situation. No fees, no repairs, close in as few as 10 days."
+  canonicalPath="/"
+  includeTurnstile={true}
+  navCtaHref="#get-offer"
+>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
+        <rect x="0" y="120" width="1440" height="100" fill="#0A1424" />
+        <rect x="40" y="90" width="70" height="130" fill="#122544" />
+        <rect x="130" y="60" width="90" height="160" fill="#0D1E3A" />
+        <rect x="240" y="100" width="60" height="120" fill="#152947" />
+        <rect x="330" y="40" width="100" height="180" fill="#0D1E3A" />
+        <rect x="460" y="80" width="75" height="140" fill="#122544" />
+        <rect x="560" y="20" width="110" height="200" fill="#0A1A32" />
+        <rect x="700" y="70" width="80" height="150" fill="#152947" />
+        <rect x="810" y="95" width="65" height="125" fill="#0D1E3A" />
+        <rect x="900" y="50" width="95" height="170" fill="#122544" />
+        <rect x="1020" y="85" width="70" height="135" fill="#0A1A32" />
+        <rect x="1120" y="30" width="105" height="190" fill="#0D1E3A" />
+        <rect x="1260" y="75" width="80" height="145" fill="#152947" />
+        <rect x="1360" y="100" width="80" height="120" fill="#122544" />
+      </svg>
+    </div>
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="pill-eyebrow reveal">Cash Home Buyers &middot; Nashville &amp; Clarksville Metro</span>
+        <h1 class="reveal">Know Exactly When Your House Sells, and For How Much.</h1>
+        <p class="hero-sub reveal">
+          We buy houses directly from Middle Tennessee homeowners in any condition. You'll know your
+          offer and your closing date before you sign anything.
+        </p>
+        <ul class="proof-list reveal">
+          <li>Fair cash offer, no obligation</li>
+          <li>No repairs, no cleaning, no showings</li>
+          <li>Zero commissions or closing costs</li>
+          <li>Close in as few as 10 days</li>
+        </ul>
+      </div>
+      <div class="hero-form reveal">
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+
+  <StatBand stats={stats} />
+
+  <section class="section section-dark">
+    <div class="wrap process-teaser">
+      <div>
+        <span class="eyebrow reveal">No Surprises</span>
+        <h2 class="display reveal">Here's Exactly What Happens.</h2>
+        <p class="lede reveal">
+          A conversation, a fair cash offer, and a closing date you pick. See the full process, start
+          to finish.
+        </p>
+        <a href="/how-it-works/" class="btn btn-ghost reveal">See the full process &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <PullQuote
+        quote="We started TN Home Cash Offer because too many homeowners in a hard spot were choosing between months on the market or a lowball offer that felt like a take-it-or-leave-it. We wanted there to be a third option: fast, fair, and straightforward, without the pressure of a traditional sale."
+        cite="TN Home Cash Offer"
+      />
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap">
+      <div class="center reveal" style="max-width:600px; margin-bottom:36px;">
+        <span class="eyebrow">Why Cash vs. Agent</span>
+        <h2 class="display">How We Compare to a Traditional Agent Sale.</h2>
+      </div>
+      <ComparisonTable rows={compareRows} variant="teaser" />
+      <div class="center" style="margin-top:26px;">
+        <a href="/compare/" class="btn btn-ghost">See the full math, including a real example &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="center reveal" style="max-width:600px; margin-bottom:36px;">
+        <span class="eyebrow">You're Not Alone</span>
+        <h2 class="display">Life Happens. We've Seen It Before.</h2>
+        <p class="lede center">We work with Tennessee homeowners in all kinds of situations. No judgment, just an honest conversation.</p>
+      </div>
+      <div class="sit-grid">
+        {teaserSituations.map((s) => (
+          <SituationCard slug={s.slug} title={s.title} blurb={s.blurb} href={`/situations/${s.slug}/`} />
+        ))}
+      </div>
+      <div class="center" style="margin-top:28px;">
+        <a href="/situations/" class="btn btn-ghost">See all situations &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow">
+      <div class="center reveal" style="margin-bottom:8px;">
+        <span class="eyebrow">Quick Answer</span>
+        <h2 class="display">Are There Any Fees or Commissions?</h2>
+      </div>
+      <p class="lede center reveal" style="margin: 0 auto 20px;">
+        None. What we offer is what closes, minus anything already owed on the property itself,
+        like a mortgage balance or back taxes.
+      </p>
+      <div class="center reveal">
+        <a href="/faq/" class="btn btn-ghost">Read the full FAQ &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bottom-cta">
+    <div class="wrap-narrow center">
+      <span class="eyebrow reveal">Ready When You Are</span>
+      <h2 class="display reveal">Take the First Step. No Pressure, No Obligation.</h2>
+      <p class="lede center reveal" style="margin: 0 auto 28px;">
+        Even if you just want to understand your options and what they're worth, we're happy to walk through it.
+      </p>
+      <a href="#get-offer" class="btn btn-primary reveal">Request My Cash Offer &rarr;</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero { position: relative; padding: 128px 0 0; overflow: hidden; background: linear-gradient(160deg, #0E1B33 0%, #16264A 100%); }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 90% -10%, rgba(27,107,69,0.30) 0%, transparent 60%);
+  }
+  .hero-bg { position: absolute; inset: 0; bottom: 0; opacity: 0.9; }
+  .hero-bg svg { width: 100%; height: 100%; display: block; }
+  .hero-inner {
+    position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 420px; gap: 56px;
+    align-items: center; padding-bottom: 90px;
+  }
+  .hero-copy h1 {
+    font-size: clamp(32px, 4.6vw, 54px); color: #fff; margin-bottom: 18px; letter-spacing: -0.01em;
+  }
+  .hero-sub { font-size: 17px; color: rgba(255,255,255,0.62); line-height: 1.8; max-width: 520px; margin-bottom: 26px; }
+  .proof-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .proof-list li {
+    font-size: 14.5px; color: rgba(255,255,255,0.82); font-weight: 500; padding-left: 26px; position: relative;
+  }
+  .proof-list li::before {
+    content: '✓'; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--forest); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center;
+  }
+
+  .process-teaser { text-align: center; }
+  .process-teaser > div { max-width: 560px; margin: 0 auto; }
+
+  .sit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+
+  .bottom-cta { background: var(--navy); position: relative; }
+  .bottom-cta .eyebrow { color: #7EC8A0; }
+  .bottom-cta h2 { color: #fff; }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero { padding-top: 104px; }
+  }
+</style>

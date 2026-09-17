@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SituationCard from '../../components/SituationCard.astro';
+import { situations } from '../../data/situations.js';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://tnhomecashoffer.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Situations', item: 'https://tnhomecashoffer.com/situations/' },
+  ],
+};
+---
+
+<Layout
+  title="Sell a House in Any Situation | TN Home Cash Offer"
+  description="Foreclosure, inherited property, divorce, tax delinquency, distressed homes, and more. See how TN Home Cash Offer helps Tennessee homeowners in ten common situations."
+  canonicalPath="/situations/"
+  structuredData={[breadcrumbSchema]}
+>
+  <PageHero
+    eyebrow="You're Not Alone"
+    title="Whatever Got You Here, We've Probably Already Handled It."
+    subtitle="Ten situations we deal with regularly, and what selling to us actually looks like in each one."
+  />
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="sit-grid">
+        {situations.map((s) => (
+          <SituationCard slug={s.slug} title={s.title} blurb={s.blurb} href={`/situations/${s.slug}/`} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow center">
+      <a href="/compare/" class="btn btn-ghost reveal">See the numbers &rarr;</a>
+      <a href="/faq/" class="btn btn-ghost reveal" style="margin-left:12px;">Read the full FAQ &rarr;</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+</style>

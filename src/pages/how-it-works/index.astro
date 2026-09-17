@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProcessTimeline from '../../components/ProcessTimeline.astro';
+import GoodToKnow from '../../components/GoodToKnow.astro';
+
+const steps = [
+  {
+    title: 'You Reach Out',
+    body: 'A quick call, text, or form submission with your name, phone number, and the property address. No commitment, no cost.',
+  },
+  {
+    title: 'We Talk Through Your Situation',
+    body: "We follow up by phone or text to hear about your situation and the condition of the home, and ask for a few current interior and exterior photos so we understand what we're working with.",
+  },
+  {
+    title: 'We Run the Numbers',
+    body: 'Once we have what we need, we work up a fair, as-is cash offer for your property. Depending on the situation, we may also schedule an in-person walkthrough before finalizing a number.',
+  },
+  {
+    title: 'You Review the Offer, No Pressure',
+    body: "If it works for you, we send over a straightforward purchase contract. If it doesn't, no hard feelings. You decide, on your own timeline.",
+  },
+  {
+    title: 'You Pick the Closing Date',
+    body: 'Once you sign, you choose when we close. We complete the sale at a licensed local title company, the same way a traditional sale would.',
+  },
+];
+---
+
+<Layout
+  title="Our Process | How TN Home Cash Offer Buys Your House"
+  description="A step-by-step look at exactly how TN Home Cash Offer buys houses in Tennessee: what to expect at each step, what happens to your mortgage, and how closing actually works."
+  canonicalPath="/how-it-works/"
+>
+  <PageHero
+    eyebrow="Process Transparency"
+    title="Here's Exactly What Happens, Step by Step."
+    subtitle="No call center, no algorithm, no guesswork. This is the same process we walk every homeowner through, in the order it actually happens."
+  />
+
+  <section class="section section-dark">
+    <div class="wrap-narrow">
+      <ProcessTimeline steps={steps} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <div class="reveal" style="margin-bottom:36px;">
+        <h2 style="font-size:22px;">Our Offer Isn't a Guess.</h2>
+        <p class="lede">
+          Every offer reflects a real look at your property, its condition, and today's market. It's
+          not a random number, and we stand behind it.
+        </p>
+      </div>
+
+      <div class="reveal" style="margin-bottom:20px;">
+        <h2 style="font-size:22px;">Your Existing Mortgage or Liens Don't Stop a Sale.</h2>
+        <p class="lede" style="margin-bottom:16px;">
+          At closing, the title company pays off your mortgage balance, any liens, and any back taxes
+          directly from the sale proceeds before you receive the rest. You're not carrying that debt forward.
+        </p>
+        <GoodToKnow>
+          Every property's payoff situation is a little different. We'll walk through exactly what
+          applies to yours before you sign anything, and your title company handles the details.
+        </GoodToKnow>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow">
+      <h2 class="reveal center" style="margin-bottom:22px; font-size:22px;">What We Guarantee, in Writing.</h2>
+      <ul class="guarantee-list reveal">
+        <li>No fees or commissions, ever</li>
+        <li>No repairs, cleaning, or staging</li>
+        <li>No open houses, and a walkthrough only when the situation calls for one</li>
+        <li>You can walk away at any point before you sign</li>
+        <li>Your offer stands for a real window. We don't pressure you with expiring-tonight deadlines</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section bottom-cta">
+    <div class="wrap-narrow center">
+      <h2 class="display reveal">Ready to Get Your Offer?</h2>
+      <a href="/contact/#get-offer" class="btn btn-primary reveal">Get My Cash Offer</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .guarantee-list { list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 520px; margin: 0 auto; }
+  .guarantee-list li {
+    font-size: 15px; color: var(--navy); padding-left: 30px; position: relative; font-weight: 500;
+  }
+  .guarantee-list li::before {
+    content: '✓'; position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--brass); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center;
+  }
+  .bottom-cta { background: var(--navy); }
+  .bottom-cta h2 { color: #fff; margin-bottom: 22px; }
+</style>

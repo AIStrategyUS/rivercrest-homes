@@ -1,0 +1,16 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  narrow?: boolean;
+}
+const { eyebrow, title, subtitle, narrow = true } = Astro.props;
+---
+<section class="page-hero">
+  <div class={narrow ? 'wrap-narrow center' : 'wrap center'}>
+    <span class="pill-eyebrow reveal">{eyebrow}</span>
+    <h1 class="reveal">{title}</h1>
+    {subtitle && <p class="lede center reveal" style="margin:0 auto;">{subtitle}</p>}
+  </div>
+</section>

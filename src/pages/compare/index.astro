@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+
+const rows = [
+  { label: 'Commission & Fees', agent: '5-6%', us: 'None' },
+  { label: 'Closing Costs', agent: '2-3%', us: 'None' },
+  { label: 'Repairs Before Selling', agent: 'Usually required', us: 'None' },
+  { label: 'Appraisal & Inspection', agent: 'Required', us: 'Not needed' },
+  { label: 'Days to Close', agent: '30-90 days', us: 'As few as 10' },
+  { label: 'Closing Date', agent: "Buyer's schedule", us: 'Your choice' },
+  { label: 'Showings & Open Houses', agent: 'Yes, multiple', us: 'None' },
+  { label: 'Financing Falls Through Late', agent: 'Common', us: 'No buyer mortgage involved' },
+  { label: 'Appraisal-Gap Risk', agent: 'Can renegotiate or drop the deal', us: 'Not applicable' },
+  { label: 'Staging Costs', agent: 'Often expected', us: 'None' },
+  { label: 'Deal Falls Through Risk', agent: 'Common', us: 'Very rare' },
+];
+---
+
+<Layout
+  title="Cash Offer vs. Listing With an Agent | TN Home Cash Offer"
+  description="A line-by-line, real-math comparison of selling to TN Home Cash Offer for cash versus listing your Tennessee house with a traditional real estate agent."
+  canonicalPath="/compare/"
+>
+  <PageHero
+    eyebrow="The Real Math"
+    title="What Selling Your House Actually Costs, Either Way."
+    subtitle="Every number below is one you can check yourself. This isn't about which option is better in the abstract, it's about which one nets you more, on your timeline."
+  />
+
+  <section class="section-tight">
+    <div class="wrap">
+      <ComparisonTable rows={rows} variant="full" />
+    </div>
+  </section>
+
+  <section class="section section-sunk accent-top">
+    <div class="wrap-narrow">
+      <h2 class="reveal center" style="margin-bottom:8px; font-size:22px;">A Worked Example: A $250,000 House, Both Ways.</h2>
+      <p class="lede center reveal" style="margin:0 auto 28px;">The same house, sold two different ways.</p>
+      <div class="worked-example reveal">
+        <div class="we-col">
+          <div class="we-label">Listed With an Agent</div>
+          <div class="we-line"><span>List price</span><span class="mono">$250,000</span></div>
+          <div class="we-line"><span>Commission (6%)</span><span class="mono">&minus;$15,000</span></div>
+          <div class="we-line"><span>Closing costs (2.5%)</span><span class="mono">&minus;$6,250</span></div>
+          <div class="we-line"><span>Repairs / holding, ~60 days</span><span class="mono">&minus;$12,000</span></div>
+          <div class="we-line we-total"><span>What you actually receive</span><span class="mono">~$216,750</span></div>
+        </div>
+        <div class="we-col we-us">
+          <div class="we-label">Cash Offer From Us</div>
+          <div class="we-line"><span>Our offer</span><span class="mono">$250,000</span></div>
+          <div class="we-line"><span>Fees or commission</span><span class="mono">$0</span></div>
+          <div class="we-line"><span>Repairs required</span><span class="mono">$0</span></div>
+          <div class="we-line we-total"><span>What you actually receive</span><span class="mono">$250,000</span></div>
+        </div>
+      </div>
+      <p class="fine-print reveal">
+        If we offer you $250,000, you receive $250,000. Numbers above are illustrative only. Your
+        specific offer depends on your property, is not a guaranteed offer, and is subject to
+        property evaluation and agreed-upon terms.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <div class="reveal" style="margin-bottom:32px;">
+        <h2 style="font-size:22px;">The Points Where a Traditional Sale Usually Breaks.</h2>
+        <p class="lede">
+          Buyer financing gets denied after inspection. The appraisal comes in low and the deal gets
+          renegotiated or dropped. A contingency deadline is missed. None of these exist when there's no
+          buyer mortgage in the transaction.
+        </p>
+      </div>
+      <div class="reveal">
+        <h2 style="font-size:22px;">When You Should Probably List Instead.</h2>
+        <p class="lede">
+          If your house is already move-in ready, you're not in a hurry, and your neighborhood is selling
+          fast, a good agent may net you more over a few months. We'll tell you that on the phone if it's
+          true. We'd rather you trust us on the properties where a fast cash sale is genuinely the
+          better math.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bottom-cta">
+    <div class="wrap-narrow center">
+      <a href="/contact/#get-offer" class="btn btn-primary reveal">Get My Cash Offer</a>
+      <a href="/how-it-works/" class="btn btn-ghost reveal" style="margin-left:14px;">See the full process &rarr;</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .worked-example { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .we-col { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; box-shadow: var(--shadow-sm); }
+  .we-us { background: var(--forest-lt); border-color: rgba(27,107,69,0.25); }
+  .we-label { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate); margin-bottom: 14px; }
+  .we-us .we-label { color: var(--forest-dk); }
+  .we-line { display: flex; justify-content: space-between; font-size: 13.5px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .we-line:last-child { border-bottom: none; }
+  .we-total { font-weight: 700; font-size: 14.5px; padding-top: 10px; }
+  .we-us .we-total .mono { color: var(--forest-dk); font-size: 17px; }
+  .fine-print { font-size: 12px; color: var(--slate-lt); line-height: 1.7; text-align: center; }
+  .bottom-cta { background: var(--navy); }
+
+  @media (max-width: 640px) {
+    .worked-example { grid-template-columns: 1fr; }
+  }
+</style>

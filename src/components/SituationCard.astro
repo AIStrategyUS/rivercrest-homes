@@ -1,0 +1,38 @@
+---
+import SituationIcon from './SituationIcon.astro';
+
+interface Props {
+  slug: string;
+  title: string;
+  blurb: string;
+  href: string;
+}
+const { slug, title, blurb, href } = Astro.props;
+---
+<a href={href} class="sit-card card card-hover reveal">
+  <div class="sit-icon">
+    <SituationIcon slug={slug} />
+  </div>
+  <h4>{title}</h4>
+  <p>{blurb}</p>
+  <span class="sit-more">Read more &rarr;</span>
+</a>
+
+<style>
+  .sit-card {
+    display: block; text-decoration: none; padding: 24px 22px; position: relative; overflow: hidden;
+  }
+  .sit-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--forest);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .sit-card:hover::before { opacity: 1; }
+  .sit-icon {
+    width: 42px; height: 42px; border-radius: 11px; background: var(--forest-lt); color: var(--forest-dk);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 15px;
+  }
+  .sit-icon svg { width: 21px; height: 21px; }
+  .sit-card h4 { font-size: 15.5px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .sit-card p { font-size: 13px; color: var(--slate); line-height: 1.65; margin-bottom: 12px; }
+  .sit-more { font-family: var(--font-mono); font-size: 11px; color: var(--forest-dk); font-weight: 600; }
+</style>

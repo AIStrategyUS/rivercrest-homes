@@ -1,0 +1,147 @@
+---
+// Shared page shell for every route. Import this in every page.astro file
+// and wrap the page's markup in it.
+//
+// Props contract (depended on verbatim by every page):
+//   title (string): becomes <title>, also used for og:title.
+//   description (string): <meta name="description">, also og:description.
+//   canonicalPath (string): site relative path with leading and trailing
+//     slash, e.g. "/compare/" or "/" for home. Resolved against
+//     astro.config.mjs's `site` to build the canonical URL and og:url.
+//   ogImage (string, optional): site relative path to an image, defaults
+//     to the branded 1200x630 social share image.
+//   includeTurnstile (boolean, optional): when true, adds the Cloudflare
+//     Turnstile script tag to <head> (only pages rendering <LeadForm />
+//     need this).
+//   robotsNoindex (boolean, optional): when true, adds <meta name="robots"
+//     content="noindex, follow">. Used only by the two legal pages, which
+//     carried this directive on the previous site and keep it by default.
+//   navCtaHref (string, optional): passed through to <Nav />.
+//   structuredData (array of objects, optional): extra JSON-LD nodes for
+//     this page only (e.g. FAQPage, BreadcrumbList), rendered in addition
+//     to the sitewide LocalBusiness block every page already carries.
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogImage?: string;
+  includeTurnstile?: boolean;
+  robotsNoindex?: boolean;
+  navCtaHref?: string;
+  structuredData?: object[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = '/images/og-image.png',
+  includeTurnstile = false,
+  robotsNoindex = false,
+  navCtaHref,
+  structuredData = [],
+} = Astro.props;
+
+const canonicalURL = new URL(canonicalPath, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+
+// Sitewide identity - every page carries this. Only facts already stated
+// elsewhere on the site (footer, Contact, legal pages) are used here; no
+// street address is included since none is publicly given anywhere else.
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'TN Home Cash Offer',
+  alternateName: 'Rivercrest Homes LLC',
+  url: 'https://tnhomecashoffer.com',
+  telephone: '+1-629-343-0888',
+  email: 'info@tnhomecashoffer.com',
+  description:
+    'TN Home Cash Offer buys distressed, inherited, and hard-to-sell houses directly from homeowners across Middle Tennessee, in any condition, for cash.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Nashville',
+    addressRegion: 'TN',
+    addressCountry: 'US',
+  },
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Davidson County, TN' },
+    { '@type': 'AdministrativeArea', name: 'Rutherford County, TN' },
+    { '@type': 'AdministrativeArea', name: 'Sumner County, TN' },
+    { '@type': 'AdministrativeArea', name: 'Wilson County, TN' },
+    { '@type': 'AdministrativeArea', name: 'Maury County, TN' },
+    { '@type': 'AdministrativeArea', name: 'Montgomery County, TN' },
+  ],
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {robotsNoindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+    {structuredData.map((node) => (
+      <script type="application/ld+json" set:html={JSON.stringify(node)} />
+    ))}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    {includeTurnstile && (
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    )}
+
+    <!-- Meta Pixel Code -->
+    <script is:inline>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1471340857812582');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1471340857812582&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <Nav ctaHref={navCtaHref} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import { init } from '../scripts/reveal.js';
+      init();
+    </script>
+  </body>
+</html>

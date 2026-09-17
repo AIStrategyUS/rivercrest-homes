@@ -1,0 +1,216 @@
+---
+// FIXED INTEGRATION CONTRACT — do not change field names, the Worker URL,
+// or the Turnstile site key. These are wired to live infrastructure that
+// existed before this rebuild and must keep working unchanged:
+//   - POSTs (mode: 'no-cors') to https://rivercrest-property-lead-form.aistrategyus.workers.dev
+//   - payload: { submitted_at, full_name, phone, email, property_address, my_situation, cf_token }
+//   - Cloudflare Turnstile site key: 0x4AAAAAADPq_rIY9oa9jRcC
+//   - situation dropdown has exactly these 7 option strings
+//
+// presetSituation (optional): pre-selects the dropdown for situation pages
+// with no exact dropdown match of their own. Never adds/removes an option.
+interface Props {
+  presetSituation?: string;
+  compact?: boolean;
+}
+const { presetSituation = '', compact = false } = Astro.props;
+
+const SITUATIONS = [
+  'Facing foreclosure',
+  'Inherited a property',
+  'Going through divorce',
+  'Too many repairs needed',
+  'Need to relocate',
+  'Tired landlord',
+  'Other / Just curious',
+];
+---
+
+<div class="lead-form-card" id="get-offer" data-compact={compact ? 'true' : 'false'}>
+  <div class="lf-title">Request Your Cash Offer</div>
+  <div class="lf-sub">Submit your info &nbsp;&middot;&nbsp; <span>We'll reach out within 48 hours</span></div>
+
+  <div id="formWrap">
+    <form id="mainForm" novalidate>
+      <div class="fg" id="grp-name">
+        <label for="f-name">Your Name</label>
+        <input type="text" id="f-name" name="full_name" placeholder="First &amp; Last Name" required />
+        <div class="fe" id="err-name"></div>
+      </div>
+      <div class="fg" id="grp-phone">
+        <label for="f-phone">Phone Number</label>
+        <input type="tel" id="f-phone" name="phone" placeholder="(615) 000-0000" required />
+        <div class="fe" id="err-phone"></div>
+      </div>
+      <div class="fg" id="grp-email">
+        <label for="f-email">Email Address <span class="opt">(optional)</span></label>
+        <input type="email" id="f-email" name="email" placeholder="you@example.com" />
+        <div class="fe" id="err-email"></div>
+      </div>
+      <div class="fg" id="grp-addr">
+        <label for="f-addr">Property Address</label>
+        <input type="text" id="f-addr" name="property_address" placeholder="123 Main St, Nashville, TN" required />
+        <div class="fe" id="err-addr"></div>
+      </div>
+      <div class="fg" id="grp-sit">
+        <label for="f-sit">My Situation</label>
+        <select id="f-sit" name="situation">
+          <option value="">Select one (optional)</option>
+          {SITUATIONS.map((s) => (
+            <option selected={s === presetSituation}>{s}</option>
+          ))}
+        </select>
+      </div>
+
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAADPq_rIY9oa9jRcC" data-theme="light" id="turnstileWidget"></div>
+      <div class="fe" id="err-turnstile" style="text-align:center;"></div>
+
+      <button type="submit" class="btn btn-primary lf-submit" id="submitBtn">Request My Cash Offer &rarr;</button>
+    </form>
+    <p class="lf-privacy">
+      <svg viewBox="0 0 14 14" width="12" height="12" fill="none"><rect x="3" y="6" width="8" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 6V4.5a2 2 0 1 1 4 0V6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Your information is never sold, full stop.
+    </p>
+  </div>
+
+  <div class="lf-success" id="successBox">
+    <div class="lf-success-icon"><svg viewBox="0 0 32 32" fill="none"><polyline points="6,16 13,23 26,9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h3>We Got Your Info!</h3>
+    <p>A confirmation is on its way. A member of our team will reach out within <strong>48 hours</strong> after we've had a chance to review your property.</p>
+  </div>
+</div>
+
+<style>
+  .lead-form-card {
+    background: var(--white); border-radius: 18px; padding: 30px 26px;
+    box-shadow: 0 24px 64px rgba(14,27,51,0.14); border: 1px solid var(--border);
+  }
+  .lf-title { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--navy); text-align: center; margin-bottom: 4px; }
+  .lf-sub { font-size: 12px; color: var(--slate); text-align: center; margin-bottom: 20px; }
+  .lf-sub span { color: var(--forest); font-weight: 600; }
+  .fg { margin-bottom: 12px; }
+  .fg label { display: block; font-size: 11px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .fg label .opt { font-weight: 400; color: var(--slate-lt); text-transform: none; letter-spacing: 0; }
+  .fg input, .fg select {
+    width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+    font-family: var(--font-body); font-size: 15px; color: var(--navy); background: var(--white);
+    outline: none; transition: border-color 0.2s;
+  }
+  .fg input:focus, .fg select:focus { border-color: var(--forest); }
+  .fg.input-err input, .fg.input-err select { border-color: var(--danger); }
+  .fe { font-size: 12px; color: var(--danger); margin-top: 3px; min-height: 15px; font-weight: 500; }
+  .cf-turnstile { margin: 14px 0; display: flex; justify-content: center; }
+  .lf-submit { width: 100%; justify-content: center; font-size: 16px; padding: 15px; margin-top: 2px; }
+  .lf-submit:disabled { background: var(--slate-lt); cursor: not-allowed; transform: none; box-shadow: none; }
+  .lf-privacy {
+    text-align: center; margin-top: 12px; font-size: 11.5px; color: var(--slate-lt); line-height: 1.6;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+  }
+  .lf-success { display: none; background: var(--forest-lt); border: 2px solid rgba(27,107,69,0.2); border-radius: 14px; padding: 36px 24px; text-align: center; }
+  .lf-success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--forest); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+  .lf-success-icon svg { width: 26px; height: 26px; }
+  .lf-success h3 { font-size: 20px; margin-bottom: 8px; }
+  .lf-success p { font-size: 14px; color: var(--slate); line-height: 1.7; }
+</style>
+
+<script>
+  function setupLeadForm(root) {
+    const form = root.querySelector('#mainForm');
+    if (!form || form.dataset.wired) return;
+    form.dataset.wired = 'true';
+
+    const phone = root.querySelector('#f-phone');
+    phone?.addEventListener('input', function () {
+      let v = this.value.replace(/\D/g, '').substring(0, 10);
+      if (v.length >= 6) v = '(' + v.slice(0, 3) + ') ' + v.slice(3, 6) + '-' + v.slice(6);
+      else if (v.length >= 3) v = '(' + v.slice(0, 3) + ') ' + v.slice(3);
+      this.value = v;
+    });
+
+    function clearErrors() {
+      root.querySelectorAll('.fg').forEach((g) => g.classList.remove('input-err'));
+      ['err-name', 'err-phone', 'err-email', 'err-addr', 'err-turnstile'].forEach((id) => {
+        const el = root.querySelector('#' + id);
+        if (el) el.textContent = '';
+      });
+    }
+
+    function validate() {
+      let ok = true;
+      const name = root.querySelector('#f-name');
+      const phoneEl = root.querySelector('#f-phone');
+      const addr = root.querySelector('#f-addr');
+      const email = root.querySelector('#f-email');
+      clearErrors();
+
+      if (!name.value.trim() || name.value.trim().length < 2) {
+        root.querySelector('#grp-name').classList.add('input-err');
+        root.querySelector('#err-name').textContent = 'Please enter your name.';
+        name.focus();
+        ok = false;
+      } else if (phoneEl.value.replace(/\D/g, '').length !== 10) {
+        root.querySelector('#grp-phone').classList.add('input-err');
+        root.querySelector('#err-phone').textContent = 'Please enter a valid 10-digit phone number.';
+        phoneEl.focus();
+        ok = false;
+      } else if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        root.querySelector('#grp-email').classList.add('input-err');
+        root.querySelector('#err-email').textContent = 'Please enter a valid email address.';
+        email.focus();
+        ok = false;
+      } else if (!addr.value.trim() || addr.value.trim().length < 8) {
+        root.querySelector('#grp-addr').classList.add('input-err');
+        root.querySelector('#err-addr').textContent = 'Please enter a valid property address.';
+        addr.focus();
+        ok = false;
+      }
+      return ok;
+    }
+
+    const WORKER_URL = 'https://rivercrest-property-lead-form.aistrategyus.workers.dev';
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+      const token = root.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (!token) {
+        root.querySelector('#err-turnstile').textContent = 'Please complete the security check above.';
+        return;
+      }
+      const btn = root.querySelector('#submitBtn');
+      const originalLabel = btn.textContent;
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+
+      const payload = {
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }),
+        full_name: root.querySelector('#f-name').value.trim(),
+        phone: root.querySelector('#f-phone').value.trim(),
+        email: root.querySelector('#f-email').value.trim(),
+        property_address: root.querySelector('#f-addr').value.trim(),
+        my_situation: root.querySelector('#f-sit').value,
+        cf_token: token,
+      };
+
+      try {
+        await fetch(WORKER_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        root.querySelector('#formWrap').style.display = 'none';
+        const sb = root.querySelector('#successBox');
+        sb.style.display = 'block';
+        sb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (err) {
+        btn.textContent = originalLabel;
+        btn.disabled = false;
+        root.querySelector('#err-turnstile').textContent =
+          'Something went wrong sending your info. Please try again, or call/text 629-343-0888 directly.';
+      }
+    });
+  }
+
+  document.querySelectorAll('.lead-form-card').forEach(setupLeadForm);
+</script>
