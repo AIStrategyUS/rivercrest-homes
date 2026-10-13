@@ -85,10 +85,30 @@ policy on how/when to add real entries). `situations.js` and `faq.js` are plain 
 - Titles/descriptions across Home, the Situations hub, and the major-repairs situation page
   explicitly use "distressed" alongside the existing "any condition" / "sell fast" language, to
   target that specific search intent without keyword-stuffing.
-- Not done: a real favicon/OG share image (both still reference `/images/favicon.png` and
-  `/images/og-image.png`, which don't exist yet) — this needs an actual logo asset from Nic/a
-  designer, not something to fabricate. Low priority for search ranking itself, but worth doing
-  before launch for how the site looks when shared on social.
+
+## Logo and brand assets
+
+The TN Home Cash Offer logo (supplied by Nic) is used in the header, the footer, the favicon set,
+the link-preview (Open Graph / Twitter) image, and the `LocalBusiness` structured data. It is
+navy + green on white, so the header is white (it would disappear on the old dark header) and the
+footer, which stays dark, shows it on a white tile.
+
+All files live in `public/images/` (plus `public/favicon.ico`), generated from Nic's original
+artwork with the circular border removed (artwork only, nothing redrawn):
+
+- `logo.png` (512px) — structured data and general use
+- `logo-192.png` — header and footer (small file, loads fast)
+- `og-image.png` (1200x630, logo centered on white) — what shows when a link is shared
+- `favicon.ico`, `favicon-32.png`, `favicon-192.png`, `apple-touch-icon.png`
+
+The original file is kept locally (not in this public repo) at
+`website/Brand/tn-home-cash-offer-logo-original.webp` in the parent workspace. If the logo ever
+changes, regenerate these from the new original; the ring-removal step clips at radius 600px of
+the 1254px original (artwork ends at ~594px, the ring starts at ~605px).
+
+Social networks cache link previews, so a link that was already shared before the logo went up
+may keep showing the old preview until the platform re-scrapes it (Facebook's Sharing Debugger
+forces this).
 
 ## Known simplifications versus the original redesign plan
 

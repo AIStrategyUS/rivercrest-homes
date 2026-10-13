@@ -68,6 +68,8 @@ const localBusiness = {
   name: 'TN Home Cash Offer',
   alternateName: 'Rivercrest Homes LLC',
   url: 'https://tnhomecashoffer.com',
+  logo: 'https://tnhomecashoffer.com/images/logo.png',
+  image: 'https://tnhomecashoffer.com/images/logo.png',
   telephone: '+1-629-343-0888',
   email: 'info@tnhomecashoffer.com',
   description:
@@ -98,15 +100,24 @@ const localBusiness = {
     <link rel="canonical" href={canonicalURL} />
     {robotsNoindex && <meta name="robots" content="noindex, follow" />}
 
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TN Home Cash Offer" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TN Home Cash Offer logo" />
     <meta property="og:url" content={canonicalURL} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content="TN Home Cash Offer logo" />
 
     <script type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
     {structuredData.map((node) => (
