@@ -46,7 +46,9 @@ const {
   title,
   description,
   canonicalPath,
-  ogImage = '/images/og-image.png',
+  // ?v= is a cache-buster: Meta/Facebook cache a link's image by URL, and cached a failed
+  // fetch while this file didn't exist yet. Bump the number if the image ever changes.
+  ogImage = '/images/og-image.png?v=2',
   includeTurnstile = false,
   robotsNoindex = false,
   navCtaHref,
