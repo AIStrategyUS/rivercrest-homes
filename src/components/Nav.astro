@@ -106,6 +106,13 @@ const links = [
     .nav-links, .nav-phone { display: none; }
     .menu-btn { display: flex; }
   }
+
+  /* Below ~560px there isn't room for brand + CTA button + hamburger on one
+     line without the hamburger getting pushed off-screen. The mobile menu
+     already has its own prominent CTA, so drop the header one here. */
+  @media (max-width: 560px) {
+    .nav-cta { display: none; }
+  }
 </style>
 
 <script>

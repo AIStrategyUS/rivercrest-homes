@@ -1,0 +1,146 @@
+---
+// Site-wide lead-capture popup. Reuses the exact same <LeadForm /> component
+// (same fields, same Turnstile key, same Worker endpoint) as the rest of the
+// site, so a submission from the popup lands in exactly the same place as
+// one from the homepage or Contact page.
+//
+// Trigger design deliberately avoids showing this immediately on page load:
+// Google penalizes mobile pages that block content with an interstitial
+// right after a visitor arrives from search. Instead it waits for one of:
+//   - exit intent (desktop: mouse leaves toward the top of the viewport)
+//   - 30 seconds on the page
+//   - scrolling past 50% of the page
+// whichever happens first, and only once every 7 days per visitor
+// (localStorage), so it never nags a returning visitor.
+import LeadForm from './LeadForm.astro';
+---
+
+<div id="lead-modal" class="lead-modal" role="dialog" aria-modal="true" aria-label="Request your cash offer" aria-hidden="true">
+  <div class="lead-modal-backdrop" data-close></div>
+  <div class="lead-modal-card">
+    <div class="lead-modal-kicker">Before You Go</div>
+    <div class="lead-modal-form-wrap">
+      <button type="button" class="lead-modal-close" data-close aria-label="Close">&times;</button>
+      <LeadForm compact={true} />
+    </div>
+  </div>
+</div>
+
+<style>
+  .lead-modal {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .lead-modal.open { opacity: 1; pointer-events: auto; }
+  .lead-modal-backdrop {
+    position: absolute; inset: 0; background: rgba(6,12,24,0.62); backdrop-filter: blur(2px);
+  }
+  .lead-modal-card {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    width: 100%; max-width: 440px; max-height: 90vh;
+    transform: translateY(14px); transition: transform 0.25s ease;
+  }
+  .lead-modal.open .lead-modal-card { transform: translateY(0); }
+  .lead-modal-form-wrap {
+    position: relative; width: 100%; max-height: 100%; overflow-y: auto; border-radius: 18px;
+  }
+  .lead-modal-close {
+    position: absolute; top: 12px; right: 12px; z-index: 1;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--paper-sunk); color: var(--navy);
+    border: none; font-size: 18px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lead-modal-close:hover { background: var(--border); }
+  .lead-modal-kicker {
+    flex-shrink: 0;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--brass-ink); background: var(--brass-lt); border: 1px solid var(--brass-border);
+    padding: 5px 14px; border-radius: 100px; white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lead-modal, .lead-modal-card { transition: none; }
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'tnhco_popup_last_shown';
+  const COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
+  const DELAY_MS = 30000;
+  const SCROLL_TRIGGER_RATIO = 0.5;
+
+  function alreadyShownRecently() {
+    try {
+      const last = localStorage.getItem(STORAGE_KEY);
+      return !!last && Date.now() - Number(last) < COOLDOWN_MS;
+    } catch {
+      return false;
+    }
+  }
+
+  function markShown() {
+    try {
+      localStorage.setItem(STORAGE_KEY, String(Date.now()));
+    } catch {
+      /* ignore (private browsing etc.) */
+    }
+  }
+
+  function initLeadModal() {
+    const modal = document.getElementById('lead-modal');
+    if (!modal || alreadyShownRecently()) return;
+
+    let shown = false;
+    let lastFocused = null;
+
+    function open() {
+      if (shown) return;
+      shown = true;
+      lastFocused = document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const closeBtn = modal.querySelector('.lead-modal-close');
+      if (closeBtn instanceof HTMLElement) closeBtn.focus();
+      markShown();
+    }
+
+    function close() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocused instanceof HTMLElement) lastFocused.focus();
+    }
+
+    modal.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) close();
+    });
+
+    // Exit intent (desktop only - no pointer events like this on touch)
+    document.addEventListener('mouseout', (e) => {
+      if (!e.relatedTarget && e.clientY <= 0) open();
+    });
+
+    // Time-delay fallback (covers mobile, and desktop visitors who never trigger exit intent)
+    const timer = setTimeout(open, DELAY_MS);
+
+    // Scroll-depth fallback
+    window.addEventListener(
+      'scroll',
+      () => {
+        const doc = document.documentElement;
+        const scrolled = (window.scrollY + window.innerHeight) / doc.scrollHeight;
+        if (scrolled > SCROLL_TRIGGER_RATIO) open();
+      },
+      { passive: true }
+    );
+
+    // If the form inside succeeds, no need to keep the timer around
+    modal.addEventListener('submit', () => clearTimeout(timer), true);
+  }
+
+  initLeadModal();
+</script>

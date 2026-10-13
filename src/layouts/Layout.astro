@@ -20,9 +20,15 @@
 //   structuredData (array of objects, optional): extra JSON-LD nodes for
 //     this page only (e.g. FAQPage, BreadcrumbList), rendered in addition
 //     to the sitewide LocalBusiness block every page already carries.
+//   showLeadPopup (boolean, optional): when true, adds the exit-intent/
+//     delayed lead-capture popup (<LeadFormModal />). Only use on pages
+//     that don't already have an embedded <LeadForm /> of their own (Home,
+//     Contact, and every situation page all already have one visible).
+//     Implies includeTurnstile, since the popup renders its own LeadForm.
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import LeadFormModal from '../components/LeadFormModal.astro';
 
 interface Props {
   title: string;
@@ -33,6 +39,7 @@ interface Props {
   robotsNoindex?: boolean;
   navCtaHref?: string;
   structuredData?: object[];
+  showLeadPopup?: boolean;
 }
 
 const {
@@ -44,7 +51,10 @@ const {
   robotsNoindex = false,
   navCtaHref,
   structuredData = [],
+  showLeadPopup = false,
 } = Astro.props;
+
+const needsTurnstile = includeTurnstile || showLeadPopup;
 
 const canonicalURL = new URL(canonicalPath, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
@@ -110,7 +120,7 @@ const localBusiness = {
       rel="stylesheet"
     />
 
-    {includeTurnstile && (
+    {needsTurnstile && (
       <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     )}
 
@@ -138,6 +148,7 @@ const localBusiness = {
       <slot />
     </main>
     <Footer />
+    {showLeadPopup && <LeadFormModal />}
 
     <script>
       import { init } from '../scripts/reveal.js';
